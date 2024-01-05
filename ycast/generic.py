@@ -2,7 +2,7 @@ import logging
 import os
 
 USER_AGENT = 'YCast'
-VAR_PATH = os.path.expanduser("~") + '/.ycast'
+VAR_PATH = os.path.expanduser('~') + '/.ycast'
 CACHE_PATH = VAR_PATH + '/cache'
 
 

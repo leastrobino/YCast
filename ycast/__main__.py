@@ -26,7 +26,7 @@ def launch_server():
     server.run(arguments.config, arguments.address, arguments.port)
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     if sys.version_info[0] < 3:
         logging.error("Unsupported Python version (Python %s). Minimum required version is Python 3.",
                       sys.version_info[0])

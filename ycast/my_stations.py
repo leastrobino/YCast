@@ -6,7 +6,7 @@ import yaml
 import ycast.vtuner as vtuner
 import ycast.generic as generic
 
-ID_PREFIX = "MY"
+ID_PREFIX = 'MY'
 
 config_file = 'stations.yml'
 

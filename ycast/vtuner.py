@@ -83,8 +83,8 @@ class Search:
         ET.SubElement(item, 'SearchURLBackUp').text = add_bogus_parameter(self.url)
         ET.SubElement(item, 'SearchCaption').text = self.caption
         ET.SubElement(item, 'SearchTextbox').text = None
-        ET.SubElement(item, 'SearchButtonGo').text = "Search"
-        ET.SubElement(item, 'SearchButtonCancel').text = "Cancel"
+        ET.SubElement(item, 'SearchButtonGo').text = 'Search'
+        ET.SubElement(item, 'SearchButtonCancel').text = 'Cancel'
         return item
 
 

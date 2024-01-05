@@ -5,13 +5,13 @@ from ycast import __version__
 import ycast.vtuner as vtuner
 import ycast.generic as generic
 
-API_ENDPOINT = "http://all.api.radio-browser.info"
-MINIMUM_COUNT_GENRE = 5
+API_ENDPOINT = 'http://all.api.radio-browser.info'
 MINIMUM_COUNT_COUNTRY = 5
 MINIMUM_COUNT_LANGUAGE = 5
+MINIMUM_COUNT_GENRE = 5
 DEFAULT_STATION_LIMIT = 200
 SHOW_BROKEN_STATIONS = False
-ID_PREFIX = "RB"
+ID_PREFIX = 'RB'
 
 
 def get_json_attr(json, attr):
@@ -48,14 +48,14 @@ class Station:
 
 def request(url):
     logging.debug("Radiobrowser API request: %s", url)
-    headers = {'content-type': 'application/json', 'User-Agent': generic.USER_AGENT + '/' + __version__}
+    headers = {'Content-Type': 'application/json', 'User-Agent': generic.USER_AGENT + '/' + __version__}
     try:
         response = requests.get(API_ENDPOINT + '/json/' + url, headers=headers)
     except requests.exceptions.ConnectionError as err:
         logging.error("Connection to Radiobrowser API failed (%s)", err)
         return {}
     if response.status_code != 200:
-        logging.error("Could not fetch data from Radiobrowser API (HTML status %s)", response.status_code)
+        logging.error("Could not fetch data from Radiobrowser API (HTTP status %s)", response.status_code)
         return {}
     return response.json()
 

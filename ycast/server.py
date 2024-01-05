@@ -27,7 +27,7 @@ my_stations_enabled = False
 app = Flask(__name__)
 
 
-def run(config, address='0.0.0.0', port=8010):
+def run(config, address='0.0.0.0', port=80):
     try:
         check_my_stations_feature(config)
         app.run(host=address, port=port)
@@ -112,7 +112,7 @@ def get_station_by_id(stationid, additional_info=False):
 
 
 def vtuner_redirect(url):
-    if request and request.host and not re.search("^[A-Za-z0-9]+\.vtuner\.com$", request.host):
+    if request and request.host and not re.search('^[A-Za-z0-9]+\.vtuner\.com$', request.host):
         logging.warning("You are not accessing a YCast redirect with a whitelisted host url (*.vtuner.com). "
                         "Some AVRs have problems with this. The requested host was: %s", request.host)
     return redirect(url, code=302)
@@ -143,7 +143,7 @@ def upstream(path):
            methods=['GET', 'POST'])
 def landing():
     page = vtuner.Page()
-    page.add(vtuner.Directory('Radiobrowser', url_for('radiobrowser_landing', _external=True), 4))
+    page.add(vtuner.Directory('Radio Browser', url_for('radiobrowser_landing', _external=True), 4))
     if my_stations_enabled:
         page.add(vtuner.Directory('My Stations', url_for('my_stations_landing', _external=True),
                                   len(my_stations.get_category_directories())))
@@ -178,7 +178,7 @@ def radiobrowser_landing():
     page.add(vtuner.Directory('Languages', url_for('radiobrowser_languages', _external=True),
                               len(radiobrowser.get_language_directories())))
     page.add(vtuner.Directory('Most Popular', url_for('radiobrowser_popular', _external=True),
-                              len(radiobrowser.get_stations_by_votes())))
+                              radiobrowser.DEFAULT_STATION_LIMIT))
     page.set_count(4)
     return page.to_string()
 
