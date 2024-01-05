@@ -50,6 +50,9 @@ def get_stations_yaml():
     except FileNotFoundError:
         logging.error("Station configuration '%s' not found", config_file)
         return None
+    except PermissionError:
+        logging.error("Could not read station configuration '%s'", config_file)
+        return None
     except yaml.YAMLError as e:
         logging.error("Station configuration format error: %s", e)
         return None
