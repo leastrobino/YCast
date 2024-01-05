@@ -138,12 +138,10 @@ def upstream(path):
 
 
 @app.route('/',
-           defaults={'path': ''},
            methods=['GET', 'POST'])
 @app.route('/' + PATH_ROOT + '/',
-           defaults={'path': ''},
            methods=['GET', 'POST'])
-def landing(path=''):
+def landing():
     page = vtuner.Page()
     page.add(vtuner.Directory('Radiobrowser', url_for('radiobrowser_landing', _external=True), 4))
     if my_stations_enabled:
