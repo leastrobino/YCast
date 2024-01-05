@@ -1,9 +1,14 @@
 import logging
 import os
 
+import yaml
+
 USER_AGENT = 'YCast'
 VAR_PATH = os.path.expanduser('~') + '/.ycast'
 CACHE_PATH = VAR_PATH + '/cache'
+
+with open(os.path.join(os.path.dirname(os.path.realpath(__file__)), 'countries.yml'), 'r') as f:
+    country_names = yaml.safe_load(f)
 
 
 class Directory:
@@ -50,3 +55,7 @@ def get_cache_path(cache_name):
         logging.error("Could not create cache folders (%s) because of access permissions", cache_path)
         return None
     return cache_path
+
+
+def get_country_name(code):
+    return country_names.get(code.upper(), code.upper())

@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 import ycast
 
-with open("README.md", "r") as fh:
+with open('README.md', 'r') as fh:
     long_description = fh.read()
 
 setup(
@@ -12,7 +12,7 @@ setup(
     author_email='micha.laqua@gmail.com',
     description='Self hosted vTuner internet radio service emulation',
     long_description=long_description,
-    long_description_content_type="text/markdown",
+    long_description_content_type='text/markdown',
     url='https://github.com/milaq/YCast',
     license='GPLv3',
     classifiers=[
@@ -24,7 +24,7 @@ setup(
         'Operating System :: POSIX :: Linux',
         'Programming Language :: Python :: 3',
         'Topic :: Multimedia :: Sound/Audio',
-        'Topic :: Software Development :: Libraries :: Python Modules'
+        'Topic :: Software Development :: Libraries :: Python Modules',
     ],
     keywords=[
         'ycast',
@@ -38,8 +38,9 @@ setup(
         'emulation',
         'yamaha',
         'onkyo',
-        'denon'
+        'denon',
     ],
     install_requires=['requests', 'flask', 'PyYAML', 'Pillow'],
-    packages=find_packages(exclude=['contrib', 'docs', 'tests'])
+    packages=find_packages(exclude=['contrib', 'docs', 'tests']),
+    include_package_data=True,
 )
