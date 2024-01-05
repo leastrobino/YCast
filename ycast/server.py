@@ -171,12 +171,12 @@ def my_stations_category(directory):
            methods=['GET', 'POST'])
 def radiobrowser_landing():
     page = vtuner.Page()
-    page.add(vtuner.Directory('Genres', url_for('radiobrowser_genres', _external=True),
-                              len(radiobrowser.get_genre_directories())))
     page.add(vtuner.Directory('Countries', url_for('radiobrowser_countries', _external=True),
                               len(radiobrowser.get_country_directories())))
     page.add(vtuner.Directory('Languages', url_for('radiobrowser_languages', _external=True),
                               len(radiobrowser.get_language_directories())))
+    page.add(vtuner.Directory('Genres', url_for('radiobrowser_genres', _external=True),
+                              len(radiobrowser.get_genre_directories())))
     page.add(vtuner.Directory('Most Popular', url_for('radiobrowser_popular', _external=True),
                               radiobrowser.DEFAULT_STATION_LIMIT))
     page.set_count(4)
