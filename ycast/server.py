@@ -151,7 +151,7 @@ def landing(path=''):
                                   len(my_stations.get_category_directories())))
     else:
         page.add(vtuner.Display("'My Stations' feature not configured."))
-        page.set_count(1)
+    page.set_count(2)
     return page.to_string()
 
 
