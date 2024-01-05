@@ -22,7 +22,7 @@ PATH_RADIOBROWSER_LANGUAGE = 'language'
 PATH_RADIOBROWSER_GENRE = 'genre'
 PATH_RADIOBROWSER_POPULAR = 'popular'
 
-station_tracking = False
+station_tracking = True
 my_stations_enabled = False
 app = Flask(__name__)
 
@@ -228,7 +228,7 @@ def radiobrowser_genre_stations(directory):
 @app.route('/' + PATH_ROOT + '/' + PATH_RADIOBROWSER + '/' + PATH_RADIOBROWSER_POPULAR + '/',
            methods=['GET', 'POST'])
 def radiobrowser_popular():
-    stations = radiobrowser.get_stations_by_votes()
+    stations = radiobrowser.get_stations_by_clicks()
     return get_stations_page(stations, request).to_string()
 
 
