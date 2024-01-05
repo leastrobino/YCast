@@ -40,9 +40,9 @@ class Station:
 
     def get_playable_url(self):
         try:
-            playable_url_json = request('url/' + generic.get_stationid_without_prefix(self.id))[0]
+            playable_url_json = request('url/' + generic.get_stationid_without_prefix(self.id))
             self.url = playable_url_json['url']
-        except (IndexError, KeyError):
+        except KeyError:
             logging.error("Could not retrieve first playlist item for station with id '%s'", self.id)
 
 
