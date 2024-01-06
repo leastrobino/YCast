@@ -35,7 +35,7 @@ def get_icon(station):
                 ratio = MAX_SIZE / image.size[0]
             else:
                 ratio = MAX_SIZE / image.size[1]
-            image = image.resize((int(image.size[0] * ratio), int(image.size[1] * ratio)), Image.ANTIALIAS)
+            image = image.resize((int(image.size[0] * ratio), int(image.size[1] * ratio)), Image.LANCZOS)
             image.save(station_icon_file, format='JPEG')
         except Exception as e:
             logging.error("Station icon conversion error (%s)", e)
