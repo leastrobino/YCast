@@ -48,7 +48,7 @@ def get_directories_page(subdir, directories, request):
         return page
     for directory in get_paged_elements(directories, request.args):
         vtuner_directory = vtuner.Directory(directory.displayname,
-                                            url_for(subdir, _external=True, directory=directory.name),
+                                            url_for(subdir, directory=directory.name, _external=True),
                                             directory.item_count)
         page.add(vtuner_directory)
     page.set_count(len(directories))
@@ -64,8 +64,10 @@ def get_stations_page(stations, request):
     for station in get_paged_elements(stations, request.args):
         vtuner_station = station.to_vtuner()
         if station_tracking:
-            vtuner_station.set_trackurl(request.host_url + PATH_ROOT + '/' + PATH_PLAY + '?id=' + vtuner_station.uid)
-        vtuner_station.icon = request.host_url + PATH_ROOT + '/' + PATH_ICON + '?id=' + vtuner_station.uid
+            vtuner_station.url = url_for('get_stream_url', id=vtuner_station.uid, _external=True)
+        else:
+            vtuner_station.url = strip_https(vtuner_station.url)
+        vtuner_station.icon = url_for('get_station_icon', id=vtuner_station.uid, _external=True)
         page.add(vtuner_station)
     page.set_count(len(stations))
     return page
@@ -109,6 +111,12 @@ def get_station_by_id(stationid, additional_info=False):
             station.get_playable_url()
         return station
     return None
+
+
+def strip_https(url):
+    if url.startswith('https://'):
+        url = 'http://' + url[8:]
+    return url
 
 
 def vtuner_redirect(url):
@@ -259,7 +267,7 @@ def get_stream_url():
         logging.error("Could not get station with id '%s'", stationid)
         abort(404)
     logging.debug("Station with ID '%s' requested", station.id)
-    return vtuner_redirect(station.url)
+    return vtuner_redirect(strip_https(station.url))
 
 
 @app.route('/' + PATH_ROOT + '/' + PATH_STATION,
@@ -278,8 +286,10 @@ def get_station_info():
         return page.to_string()
     vtuner_station = station.to_vtuner()
     if station_tracking:
-        vtuner_station.set_trackurl(request.host_url + PATH_ROOT + '/' + PATH_PLAY + '?id=' + vtuner_station.uid)
-    vtuner_station.icon = request.host_url + PATH_ROOT + '/' + PATH_ICON + '?id=' + vtuner_station.uid
+        vtuner_station.url = url_for('get_stream_url', id=vtuner_station.uid, _external=True)
+    else:
+        vtuner_station.url = strip_https(vtuner_station.url)
+    vtuner_station.icon = url_for('get_station_icon', id=vtuner_station.uid, _external=True)
     page = vtuner.Page()
     page.add(vtuner_station)
     page.set_count(1)

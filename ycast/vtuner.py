@@ -7,12 +7,6 @@ def get_init_token():
     return '<EncryptedToken>0000000000000000</EncryptedToken>'
 
 
-def strip_https(url):
-    if url.startswith('https://'):
-        url = 'http://' + url[8:]
-    return url
-
-
 def add_bogus_parameter(url):
     """
     We need this bogus parameter because some (if not all) AVRs blindly append additional request parameters
@@ -103,17 +97,13 @@ class Directory:
         ET.SubElement(item, 'DirCount').text = str(self.item_count)
         return item
 
-    def set_item_count(self, item_count):
-        self.item_count = item_count
-
 
 class Station:
     def __init__(self, uid, name, description, url, icon, genre, location, mime, bitrate, bookmark):
         self.uid = uid
         self.name = name
         self.description = description
-        self.url = strip_https(url)
-        self.trackurl = None
+        self.url = url
         self.icon = icon
         self.genre = genre
         self.location = location
@@ -121,18 +111,12 @@ class Station:
         self.bitrate = bitrate
         self.bookmark = bookmark
 
-    def set_trackurl(self, url):
-        self.trackurl = url
-
     def to_xml(self):
         item = ET.Element('Item')
         ET.SubElement(item, 'ItemType').text = 'Station'
         ET.SubElement(item, 'StationId').text = self.uid
         ET.SubElement(item, 'StationName').text = self.name
-        if self.trackurl:
-            ET.SubElement(item, 'StationUrl').text = self.trackurl
-        else:
-            ET.SubElement(item, 'StationUrl').text = self.url
+        ET.SubElement(item, 'StationUrl').text = self.url
         ET.SubElement(item, 'StationDesc').text = self.description
         ET.SubElement(item, 'Logo').text = self.icon
         ET.SubElement(item, 'StationFormat').text = self.genre
