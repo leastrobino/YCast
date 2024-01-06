@@ -20,9 +20,18 @@ class Station:
         self.name = station_json.get('name')
         self.url = station_json.get('url')
         self.icon = station_json.get('favicon')
-        self.tags = station_json.get('tags').split(',')
-        self.countrycode = station_json.get('countrycode')
-        self.language = station_json.get('language')
+        try:
+            self.tags = [tag.capitalize() for tag in station_json['tags'].split(',')]
+        except:
+            self.tags = ['']
+        try:
+            self.countrycode = station_json['countrycode'].upper()
+        except:
+            self.countrycode = None
+        try:
+            self.language = station_json['language'].title()
+        except:
+            self.language = None
         self.votes = station_json.get('votes')
         self.codec = station_json.get('codec')
         self.bitrate = station_json.get('bitrate')
