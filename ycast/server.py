@@ -64,10 +64,10 @@ def get_stations_page(stations, request):
     for station in get_paged_elements(stations, request.args):
         vtuner_station = station.to_vtuner()
         if station_tracking:
-            vtuner_station.url = url_for('get_stream_url', id=vtuner_station.uid, _external=True)
+            vtuner_station.url = url_for('get_stream_url', id=vtuner_station.id, _external=True)
         else:
             vtuner_station.url = strip_https(vtuner_station.url)
-        vtuner_station.icon = url_for('get_station_icon', id=vtuner_station.uid, _external=True)
+        vtuner_station.icon = url_for('get_station_icon', id=vtuner_station.id, _external=True)
         page.add(vtuner_station)
     page.set_count(len(stations))
     return page
@@ -286,10 +286,10 @@ def get_station_info():
         return page.to_string()
     vtuner_station = station.to_vtuner()
     if station_tracking:
-        vtuner_station.url = url_for('get_stream_url', id=vtuner_station.uid, _external=True)
+        vtuner_station.url = url_for('get_stream_url', id=vtuner_station.id, _external=True)
     else:
         vtuner_station.url = strip_https(vtuner_station.url)
-    vtuner_station.icon = url_for('get_station_icon', id=vtuner_station.uid, _external=True)
+    vtuner_station.icon = url_for('get_station_icon', id=vtuner_station.id, _external=True)
     page = vtuner.Page()
     page.add(vtuner_station)
     page.set_count(1)

@@ -21,28 +21,28 @@ class Directory:
             self.displayname = name
 
 
-def generate_stationid_with_prefix(uid, prefix):
+def generate_stationid_with_prefix(id, prefix):
     if not prefix or len(prefix) != 2:
         logging.error("Invalid station prefix length (must be 2)")
         return None
-    if not uid:
+    if not id:
         logging.error("Missing station id for full station id generation")
         return None
-    return str(prefix) + '_' + str(uid)
+    return str(prefix) + '_' + str(id)
 
 
-def get_stationid_prefix(uid):
-    if len(uid) < 4:
+def get_stationid_prefix(id):
+    if len(id) < 4:
         logging.error("Could not extract stationid (Invalid station id length)")
         return None
-    return uid[:2]
+    return id[:2]
 
 
-def get_stationid_without_prefix(uid):
-    if len(uid) < 4:
+def get_stationid_without_prefix(id):
+    if len(id) < 4:
         logging.error("Could not extract stationid (Invalid station id length)")
         return None
-    return uid[3:]
+    return id[3:]
 
 
 def get_cache_path(cache_name):

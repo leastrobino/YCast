@@ -12,15 +12,16 @@ config_file = 'stations.yml'
 
 
 class Station:
-    def __init__(self, uid, name, url, category):
-        self.id = generic.generate_stationid_with_prefix(uid, ID_PREFIX)
+    def __init__(self, id, name, url, tag):
+        self.id = generic.generate_stationid_with_prefix(id, ID_PREFIX)
         self.name = name
         self.url = url
-        self.tag = category
         self.icon = None
+        self.tag = tag
 
     def to_vtuner(self):
-        return vtuner.Station(self.id, self.name, self.tag, self.url, self.icon, self.tag, None, None, None, None)
+        return vtuner.Station(self.id, self.name, self.url, icon=self.icon,
+                              description=self.tag, genre=self.tag)
 
 
 def set_config(config):
@@ -33,12 +34,12 @@ def set_config(config):
         return False
 
 
-def get_station_by_id(uid):
+def get_station_by_id(id):
     my_stations_yaml = get_stations_yaml()
     if my_stations_yaml:
         for category in my_stations_yaml:
             for station in get_stations_by_category(category):
-                if uid == generic.get_stationid_without_prefix(station.id):
+                if id == generic.get_stationid_without_prefix(station.id):
                     return station
     return None
 

@@ -83,28 +83,29 @@ class Search:
 
 
 class Directory:
-    def __init__(self, title, destination, item_count=-1):
+    def __init__(self, title, url, item_count=-1):
         self.title = title
-        self.destination = destination
+        self.url = url
         self.item_count = item_count
 
     def to_xml(self):
         item = ET.Element('Item')
         ET.SubElement(item, 'ItemType').text = 'Dir'
         ET.SubElement(item, 'Title').text = self.title
-        ET.SubElement(item, 'UrlDir').text = add_bogus_parameter(self.destination)
-        ET.SubElement(item, 'UrlDirBackUp').text = add_bogus_parameter(self.destination)
+        ET.SubElement(item, 'UrlDir').text = add_bogus_parameter(self.url)
+        ET.SubElement(item, 'UrlDirBackUp').text = add_bogus_parameter(self.url)
         ET.SubElement(item, 'DirCount').text = str(self.item_count)
         return item
 
 
 class Station:
-    def __init__(self, uid, name, description, url, icon, genre, location, mime, bitrate, bookmark):
-        self.uid = uid
+    def __init__(self, id, name, url, icon=None, description=None, genre=None,
+                 location=None, mime=None, bitrate=None, bookmark=None):
+        self.id = id
         self.name = name
-        self.description = description
         self.url = url
         self.icon = icon
+        self.description = description
         self.genre = genre
         self.location = location
         self.mime = mime
@@ -114,15 +115,15 @@ class Station:
     def to_xml(self):
         item = ET.Element('Item')
         ET.SubElement(item, 'ItemType').text = 'Station'
-        ET.SubElement(item, 'StationId').text = self.uid
+        ET.SubElement(item, 'StationId').text = self.id
         ET.SubElement(item, 'StationName').text = self.name
         ET.SubElement(item, 'StationUrl').text = self.url
-        ET.SubElement(item, 'StationDesc').text = self.description
         ET.SubElement(item, 'Logo').text = self.icon
+        ET.SubElement(item, 'StationDesc').text = self.description
         ET.SubElement(item, 'StationFormat').text = self.genre
         ET.SubElement(item, 'StationLocation').text = self.location
-        ET.SubElement(item, 'StationBandWidth').text = str(self.bitrate) if self.bitrate else None
         ET.SubElement(item, 'StationMime').text = self.mime
-        ET.SubElement(item, 'Relia').text = '3'
+        ET.SubElement(item, 'StationBandWidth').text = str(self.bitrate) if self.bitrate else None
         ET.SubElement(item, 'Bookmark').text = self.bookmark
+        ET.SubElement(item, 'Relia').text = '3'
         return item

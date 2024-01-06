@@ -28,8 +28,8 @@ class Station:
         self.bitrate = station_json.get('bitrate')
 
     def to_vtuner(self):
-        return vtuner.Station(self.id, self.name, ', '.join(self.tags), self.url, self.icon,
-                              self.tags[0], self.countrycode, self.codec, self.bitrate, None)
+        return vtuner.Station(self.id, self.name, self.url, icon=self.icon, description=', '.join(self.tags),
+                              genre=self.tags[0], location=self.countrycode, mime=self.codec, bitrate=self.bitrate)
 
     def get_playable_url(self):
         try:
@@ -53,8 +53,8 @@ def request(url):
     return response.json()
 
 
-def get_station_by_id(uid):
-    station_json = request('stations/byuuid/' + str(uid))
+def get_station_by_id(id):
+    station_json = request('stations/byuuid/' + str(id))
     if station_json and len(station_json):
         return Station(station_json[0])
     else:
