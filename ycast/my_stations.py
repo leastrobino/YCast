@@ -49,13 +49,13 @@ def get_stations_yaml():
         with open(config_file, 'r') as f:
             my_stations = yaml.safe_load(f)
     except FileNotFoundError:
-        logging.error("Station configuration '%s' not found", config_file)
+        logging.error("Station configuration file '%s' not found", config_file)
         return None
     except PermissionError:
-        logging.error("Could not read station configuration '%s'", config_file)
+        logging.error("Could not read station configuration file '%s'", config_file)
         return None
     except yaml.YAMLError as e:
-        logging.error("Station configuration format error: %s", e)
+        logging.error("Station configuration file format error: %s", e)
         return None
     return my_stations
 

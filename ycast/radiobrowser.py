@@ -45,7 +45,7 @@ class Station:
             playable_url_json = request('url/' + generic.get_stationid_without_prefix(self.id))
             self.url = playable_url_json['url']
         except KeyError:
-            logging.error("Could not retrieve first playlist item for station with id '%s'", self.id)
+            logging.error("Could not retrieve first playlist item for station with ID '%s'", self.id)
 
 
 def request(url):
@@ -53,8 +53,8 @@ def request(url):
     headers = {'Content-Type': 'application/json', 'User-Agent': generic.USER_AGENT + '/' + __version__}
     try:
         response = requests.get(API_ENDPOINT + '/json/' + url, headers=headers)
-    except requests.exceptions.ConnectionError as err:
-        logging.error("Connection to Radiobrowser API failed (%s)", err)
+    except requests.exceptions.ConnectionError as e:
+        logging.error("Connection to Radiobrowser API failed: %s", e)
         return {}
     if response.status_code != 200:
         logging.error("Could not fetch data from Radiobrowser API (HTTP status %s)", response.status_code)

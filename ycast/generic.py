@@ -26,21 +26,21 @@ def generate_stationid_with_prefix(id, prefix):
         logging.error("Invalid station prefix length (must be 2)")
         return None
     if not id:
-        logging.error("Missing station id for full station id generation")
+        logging.error("Missing station ID for full station ID generation")
         return None
     return str(prefix) + '_' + str(id)
 
 
 def get_stationid_prefix(id):
     if len(id) < 4:
-        logging.error("Could not extract stationid (Invalid station id length)")
+        logging.error("Could not extract prefix (Invalid station ID length)")
         return None
     return id[:2]
 
 
 def get_stationid_without_prefix(id):
     if len(id) < 4:
-        logging.error("Could not extract stationid (Invalid station id length)")
+        logging.error("Could not extract station ID (Invalid station ID length)")
         return None
     return id[3:]
 
@@ -52,7 +52,7 @@ def get_cache_path(cache_name):
     except FileExistsError:
         pass
     except PermissionError:
-        logging.error("Could not create cache folders (%s) because of access permissions", cache_path)
+        logging.error("Could not create cache folder '%s'", cache_path)
         return None
     return cache_path
 

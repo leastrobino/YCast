@@ -28,8 +28,8 @@ app = Flask(__name__)
 
 
 def run(config, address='0.0.0.0', port=80):
+    check_my_stations_feature(config)
     try:
-        check_my_stations_feature(config)
         app.run(host=address, port=port)
     except PermissionError:
         logging.error("No permission to create socket. Are you trying to use ports below 1024 without elevated rights?")
@@ -131,7 +131,7 @@ def strip_https(url):
 
 def vtuner_redirect(url):
     if request.host and not re.search('^[A-Za-z0-9]+\.vtuner\.com$', request.host):
-        logging.warning("You are not accessing a YCast redirect with a whitelisted host url (*.vtuner.com). "
+        logging.warning("You are not accessing a YCast redirect with a whitelisted host URL (*.vtuner.com). "
                         "Some AVRs have problems with this. The requested host was: %s", request.host)
     return redirect(url, code=302)
 
@@ -151,7 +151,7 @@ def upstream(path):
         return my_stations_landing()
     if 'loginXML.asp' in path:
         return landing()
-    logging.error("Unhandled upstream query (/setupapp/%s)", path)
+    logging.error("Unhandled upstream query: /setupapp/%s", path)
     abort(404)
 
 
@@ -166,7 +166,7 @@ def landing():
         page.add(vtuner.Directory('My Stations', url_for('my_stations_landing', _external=True),
                                   len(my_stations.get_category_directories())))
     else:
-        page.add(vtuner.Display("'My Stations' feature not configured."))
+        page.add(vtuner.Display("'My Stations' feature not configured"))
     page.set_count(2)
     return page.to_string()
 
@@ -274,7 +274,7 @@ def get_stream_url():
         abort(400)
     station = get_station_by_id(stationid, additional_info=True)
     if not station:
-        logging.error("Could not get station with id '%s'", stationid)
+        logging.error("Could not get station with ID '%s'", stationid)
         abort(404)
     logging.debug("Station with ID '%s' requested", station.id)
     return vtuner_redirect(strip_https(station.url))
@@ -289,7 +289,7 @@ def get_station_info():
         abort(400)
     station = get_station_by_id(stationid, additional_info=(not station_tracking))
     if not station:
-        logging.error("Could not get station with id '%s'", stationid)
+        logging.error("Could not get station with ID '%s'", stationid)
         page = vtuner.Page()
         page.add(vtuner.Display("Station not found"))
         page.set_count(1)
@@ -315,14 +315,14 @@ def get_station_icon():
         abort(400)
     station = get_station_by_id(stationid)
     if not station:
-        logging.error("Could not get station with id '%s'", stationid)
+        logging.error("Could not get station with ID '%s'", stationid)
         abort(404)
     if not hasattr(station, 'icon') or not station.icon:
-        logging.warning("No icon information found for station with id '%s'", stationid)
+        logging.warning("No icon information found for station with ID '%s'", stationid)
         abort(404)
     station_icon = station_icons.get_icon(station)
     if not station_icon:
-        logging.error("Could not get station icon for station with id '%s'", stationid)
+        logging.error("Could not get station icon for station with ID '%s'", stationid)
         abort(404)
     response = make_response(station_icon)
     response.headers.set('Content-Type', 'image/jpeg')
