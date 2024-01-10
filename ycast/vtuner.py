@@ -118,7 +118,7 @@ class Station:
         ET.SubElement(item, 'StationId').text = self.id
         ET.SubElement(item, 'StationName').text = self.name
         ET.SubElement(item, 'StationUrl').text = self.url
-        ET.SubElement(item, 'Logo').text = self.icon
+        # ET.SubElement(item, 'Logo').text = self.icon
         ET.SubElement(item, 'StationDesc').text = self.description
         ET.SubElement(item, 'StationFormat').text = self.genre
         ET.SubElement(item, 'StationLocation').text = self.location

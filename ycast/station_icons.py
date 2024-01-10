@@ -3,7 +3,7 @@ import requests
 import io
 import os
 
-from PIL import Image
+# from PIL import Image
 
 import ycast.generic as generic
 from ycast import __version__
