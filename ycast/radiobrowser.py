@@ -5,7 +5,7 @@ from ycast import __version__
 import ycast.vtuner as vtuner
 import ycast.generic as generic
 
-API_ENDPOINT = 'http://all.api.radio-browser.info'
+API_ENDPOINT = 'http://127.0.0.1:8002'
 MINIMUM_COUNT_COUNTRY = 5
 MINIMUM_COUNT_LANGUAGE = 0
 MINIMUM_COUNT_GENRE = 50
