@@ -139,17 +139,18 @@ def vtuner_redirect(url):
 @app.route('/setupapp/<path:path>',
            methods=['GET', 'POST'])
 def upstream(path):
+    path = path.lower()
     if request.args.get('token') == '0':
         return vtuner.get_init_token()
     if request.args.get('search'):
         return station_search()
     if 'statxml.asp' in path and request.args.get('id'):
         return get_station_info()
-    if 'navXML.asp' in path:
+    if 'navxml.asp' in path:
         return radiobrowser_landing()
-    if 'FavXML.asp' in path:
+    if 'favxml.asp' in path:
         return my_stations_landing()
-    if 'loginXML.asp' in path:
+    if 'loginxml.asp' in path:
         return landing()
     logging.error("Unhandled upstream query: /setupapp/%s", path)
     abort(404)
