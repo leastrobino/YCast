@@ -1,6 +1,6 @@
 import xml.etree.ElementTree as ET
 
-XML_HEADER = '<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>'
+XML_HEADER = '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>'
 
 
 def get_init_token():
@@ -39,7 +39,7 @@ class Page:
         return xml
 
     def to_string(self):
-        return XML_HEADER + ET.tostring(self.to_xml()).decode('utf-8')
+        return XML_HEADER + ET.tostring(self.to_xml(), encoding='unicode')
 
 
 class Previous:
