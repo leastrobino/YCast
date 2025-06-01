@@ -1,7 +1,7 @@
 import logging
 import re
 
-from flask import Flask, request, url_for, redirect, abort, make_response
+from flask import Flask, Response, abort, redirect, request, url_for
 
 import ycast.vtuner as vtuner
 import ycast.radiobrowser as radiobrowser
@@ -25,6 +25,7 @@ PATH_RADIOBROWSER_POPULAR = 'popular'
 station_tracking = True
 my_stations_enabled = False
 app = Flask(__name__)
+Response.default_mimetype = 'text/xml'
 
 
 def run(config, address='0.0.0.0', port=80):
@@ -325,6 +326,4 @@ def get_station_icon():
     if not station_icon:
         logging.error("Could not get station icon for station with ID '%s'", stationid)
         abort(404)
-    response = make_response(station_icon)
-    response.headers.set('Content-Type', 'image/jpeg')
-    return response
+    return Response(station_icon, mimetype='image/jpeg')
