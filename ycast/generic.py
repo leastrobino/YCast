@@ -1,5 +1,7 @@
+import base64
 import logging
 import os
+import uuid
 
 import yaml
 
@@ -19,6 +21,24 @@ class Directory:
             self.displayname = displayname
         else:
             self.displayname = name
+
+
+def b64encode_uuid(id):
+    try:
+        id_encoded = base64.urlsafe_b64encode(uuid.UUID(id).bytes).decode()[:22]
+    except:
+        logging.error("Could not encode UUID with Base64")
+        return None
+    return id_encoded
+
+
+def b64decode_uuid(id):
+    try:
+        id_decoded = str(uuid.UUID(bytes=base64.urlsafe_b64decode(id + '==')))
+    except:
+        logging.error("Could not decode UUID with Base64")
+        return None
+    return id_decoded
 
 
 def generate_stationid_with_prefix(id, prefix):
