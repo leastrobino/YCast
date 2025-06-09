@@ -16,7 +16,8 @@ ID_PREFIX = 'RB'
 
 class Station:
     def __init__(self, station_json):
-        self.id = generic.generate_stationid_with_prefix(station_json.get('stationuuid'), ID_PREFIX)
+        self.uuid = station_json.get('stationuuid')
+        self.id = generic.generate_stationid_with_prefix(generic.b64encode_uuid(self.uuid), ID_PREFIX)
         self.name = station_json.get('name')
         self.url = station_json.get('url')
         self.icon = station_json.get('favicon')
@@ -42,7 +43,7 @@ class Station:
 
     def get_playable_url(self):
         try:
-            playable_url_json = request('url/' + generic.get_stationid_without_prefix(self.id))
+            playable_url_json = request('url/' + self.uuid)
             self.url = playable_url_json['url']
         except KeyError:
             logging.error("Could not retrieve first playlist item for station with ID '%s'", self.id)
@@ -63,7 +64,7 @@ def request(url):
 
 
 def get_station_by_id(id):
-    station_json = request('stations/byuuid/' + str(id))
+    station_json = request('stations/byuuid/' + generic.b64decode_uuid(str(id)))
     if station_json and len(station_json):
         return Station(station_json[0])
     else:

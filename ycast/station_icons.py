@@ -29,8 +29,8 @@ def get_icon(station):
             logging.error("Could not get station icon data from '%s' (HTTP status %s)", station.icon, response.status_code)
             return None
         try:
-            image = Image.open(io.BytesIO(response.content))
-            image = image.convert('RGB')
+            image = Image.open(io.BytesIO(response.content)).convert('RGBA')
+            image = Image.alpha_composite(Image.new('RGBA', image.size, 'WHITE'), image).convert('RGB')
             if image.size[0] > image.size[1]:
                 ratio = MAX_SIZE / image.size[0]
             else:
